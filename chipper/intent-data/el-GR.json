@@ -1,42 +1,42 @@
 [
 	{
 		"name" : "intent_names_username_extend", 
-		"keyphrases": ["το ονομα μου ειναι", "ονομα ειναι", "ονομα", "το ονομα μου" ],
+		"keyphrases": ["το όνομά μου είναι", "όνομα είναι", "όνομα", "το όνομά μου" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_weather_extend", 
-		"keyphrases" : ["καιρος", "καίρος", "προγνωση καιρου", "καιρος αυριο", "πως ειναι ο καιρος" ],
+		"keyphrases" : ["καιρός", "πρόγνωση καιρού", "καιρός αύριο", "πώς είναι ο καιρός" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_names_ask", 
-		"keyphrases" : ["πως ονομαζομαι", "ποιος ειμαι", "ποιο ειναι το ονομα μου"],
+		"keyphrases" : ["πώς ονομάζομαι", "ποιος είμαι", "ποιο είναι το όνομά μου"],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_eyecolor",
-		"keyphrases" : ["χρωμα ματιων", "χρωμα", "κανε τα ματια σου να ειναι"],
+		"keyphrases" : ["χρώμα ματιών", "χρώμα", "κάνε τα μάτια σου να είναι"],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_character_age", 
-		"keyphrases" : ["ποσο χρονων", "ποσο χρονων εισαι", "χρονων εισαι", "ποια ειναι η ηλικια σου"],
+		"keyphrases" : ["πόσο χρονών", "πόσο χρονών είσαι", "χρονών είσαι", "ποια είναι η ηλικία σου", "ποσο χρονων είσαι" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_explore_start", 
-		"keyphrases" : ["αρχισε", "εξερευνα", "πανε να εξερευνησης", "αρχισε την εξερευνηση" ],
+		"keyphrases" : ["άρχισε", "εξερεύνα", "πάνε να εξερευνήσεις", "άρχισε την εξερεύνηση" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_system_charger", 
-		"keyphrases" : ["φορτισε", "σπιτι", "πανε στο σπιτι σου", "πανε να φορτισεις", "βρες τον φωρτιστη σου", "φωρτιστης" ],
+		"keyphrases" : ["φόρτισε", "σπίτι", "πάνε στο σπίτι σου", "πάνε να φορτίσεις", "βρες τον φορτιστή σου", "φορτιστής" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_system_sleep",
-		"keyphrases" : ["κοιμησου", "πανε για υπνο", "υπνος" ],
+		"keyphrases" : ["κοιμήσου", "πάνε για ύπνο", "ύπνος" ],
 		"requiresexact": false
 	},
 	{	
@@ -46,232 +46,232 @@
 	},
 	{	
 		"name": "intent_greeting_goodmorning", 
-		"keyphrases" : ["καλημερα" ],
+		"keyphrases" : ["καλημέρα" ],
 		"requiresexact": false
 	},
-		{	
+	{	
 		"name": "intent_greeting_goodnight", 
-		"keyphrases" : ["νυχτα", "καληνυχτα" ],
+		"keyphrases" : ["νύχτα", "καληνύχτα" ],
 		"requiresexact": false
 	},
-		{	
+	{	
 		"name": "intent_greeting_goodbye", 
-		"keyphrases" : ["αντιο", "αντηριο" ],
+		"keyphrases" : ["αντίο", "αντιγεια", "τοπιο" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_seasonal_happynewyear",
-		"keyphrases" : ["πυροτεχνηματα", "καινουργιος χρονος", "καλος καινουργιος", "καλη χρονια" ],
+		"keyphrases" : ["πυροτεχνήματα", "καινούργιος χρόνος", "καλός καινούργιος", "καλή χρονιά" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_seasonal_happyholidays", 
-		"keyphrases" : ["διακοπες", "χριστουγεννα" ],
+		"keyphrases" : ["διακοπές", "χριστούγεννα", "χριστού κερνάω", "καλά χριστούγεννα" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_amazon_signin", 
-		"keyphrases" : ["αλεξ", "αλεξα", "στην αλεξα", "στην αλεξ", "συνδεσου στην αλεξα" ],
+		"keyphrases" : ["αλέξ", "αλέξα", "στην αλέξα", "συνδέσου στην αλέξα" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_amazon_signout", 
-		"keyphrases" : ["αποσυνδεσου", "αποσυνδεσου απο την αλεξα", "αποσυνδεση" ],
+		"keyphrases" : ["αποσυνδέσου", "αποσυνδέσου από την αλέξα", "αποσύνδεση" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_forward",
-		"keyphrases" : ["μπροστα", "εμπρος", "πηγαινε ευθεια", "πηγαινε μπροστα", "εμπρος", "ευθεια" ],
+		"keyphrases" : ["μπροστά", "εμπρός", "πήγαινε ευθεία", "πήγαινε μπροστά", "ευθεία" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_turnaround", 
-		"keyphrases" : ["γυρνα", "εκατον οδγοντα", "γυρνα πισω σου", "γυρνα γυρω" ],
+		"keyphrases" : ["γύρνα", "εκατόν ογδόντα", "γύρνα πίσω σου", "γύρνα γύρω" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_turnleft", 
-		"keyphrases" : ["στριψε δεξια", "πηγαινε δεξια", "δεξια", "γυρνα δεξια" ],
+		"keyphrases" : ["στρίψε αριστερά", "πήγαινε αριστερά", "αριστερά", "γύρνα αριστερά" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_turnright", 
-		"keyphrases" : ["στριψε αριστερα", "πηγαινε αριστερα", "αριστερα", "γυρνα αριστερα" ],
+		"keyphrases" : ["στρίψε δεξιά", "πήγαινε δεξιά", "δεξιά", "γύρνα δεξιά" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_play_rollcube",
-		"keyphrases" : ["γυρνα τον κυβο σου", "γυρνα τον κυβο", "γυρνα τον" ],
+		"keyphrases" : ["γύρνα τον κύβο σου", "γύρνα τον κύβο", "γύρνα τον" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_play_popawheelie", 
-		"keyphrases" : ["κανε σουζα", "σουζα", "σουζανα", "σουζαν", "πανε στην μια ροδα", "μια ροδα"  ],
+		"keyphrases" : ["κάνε σούζα", "σούζα", "πάνε στη μία ρόδα", "μία ρόδα", "σουσα", "σουζα", "ουζο" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_play_fistbump", 
-		"keyphrases" : ["κολλα το", "κολλα πεντε", "γροθια" ],
+		"keyphrases" : ["κόλλα το", "κόλλα πέντε", "γροθιά", "τροχια" ],
 		"requiresexact": false
 	},
-		{	
+	{	
 		"name": "intent_play_blackjack", 
-		"keyphrases" : ["εικοσι ενα", "χαρτια", "παιχνιδι", "παιξε εικοσι ενα" ],
+		"keyphrases" : ["είκοσι ένα", "χαρτιά", "παιχνίδι", "παίξε είκοσι ένα", "μπλάκτζακ" ],
 		"requiresexact": false
 	},
-		{	
+	{	
 		"name": "intent_imperative_affirmative",
-		"keyphrases" : ["ναι", "σωστα", "σιγουρα", "ναι παρακαλω" ],
+		"keyphrases" : ["ναι", "σωστά", "σίγουρα", "ναι παρακαλώ" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_negative", 
-		"keyphrases" : ["οχι", "μην", "οχι ευχαριστω" ],
+		"keyphrases" : ["όχι", "μην", "όχι ευχαριστώ" ],
 		"requiresexact": true
 	},
 	{	
 		"name": "intent_photo_take_extend", 
-		"keyphrases" : ["φωτογραφια", "φωτο", "φωτης", "τραβηξε μια φωτογραφια", "τραβα μια", "βγαλε με φωτογραφια" ],
+		"keyphrases" : ["φωτογραφία", "φωτό", "τράβηξε μια φωτογραφία", "τράβα μια", "βγάλε με φωτογραφία" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_praise", 
-		"keyphrases" : ["καλο", "τελειο", "πολυ καλο", "καλο ρομποτ", "τελεια" ],
+		"keyphrases" : ["καλό", "τέλειο", "πολύ καλό", "καλό ρομπότ", "τέλεια" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_abuse",
-		"keyphrases" : ["κακο", "απαισιο", "το μισω", "μισω", "χάλια", "κακο ρομποτ" ],
+		"keyphrases" : ["κακό", "απαίσιο", "το μισώ", "μισώ", "χάλια", "κακό ρομπότ" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_apologize", 
-		"keyphrases" : ["συγνωμη", "σου ζηταω συγνωμη", "άκυρο" ],
+		"keyphrases" : ["συγγνώμη", "σου ζητώ συγγνώμη", "άκυρο" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_backup", 
-		"keyphrases" : ["πισω", "πανε πισω", "προς τα πισω" ],
+		"keyphrases" : ["πίσω", "πάνε πίσω", "προς τα πίσω" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_volumedown",
-		"keyphrases" : ["κατεβασε τον ηχο", "κατεβασε την φωνη", "χαμηλα", "πιο χαμηλα", "ησυχια", "turn the volume down" ],
+		"keyphrases" : ["κατέβασε τον ήχο", "κατέβασε τη φωνή", "χαμηλά", "πιο χαμηλά", "ησυχία" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_volumeup", 
-		"keyphrases" : ["ανεβασε τον ηχο", "ανεβασε την φωνη", "ανεβασε την", "πιο δυνατα" ],
+		"keyphrases" : ["ανέβασε τον ήχο", "ανέβασε τη φωνή", "πιο δυνατά" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_lookatme", 
-		"keyphrases" : ["κοιταμε", "δες με" ],
+		"keyphrases" : ["κοίταμε", "δες με" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_volumelevel_extend",
-		"keyphrases" : ["ηχος", "φωνη" ],
+		"keyphrases" : ["ήχος", "φωνή" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_shutup", 
-		"keyphrases" : ["σκασε", "βουλωσετο", "κλεισε το στομα σου" ],
+		"keyphrases" : ["σκάσε", "βούλωσέ το", "κλείσε το στόμα σου" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_greeting_hello", 
-		"keyphrases" : ["γεια", "γεια σου", "τι κανεις", "πως εισαι" ],
+		"keyphrases" : ["γεια", "γεια σου", "τι κάνεις", "πώς είσαι" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_come", 
-		"keyphrases" : ["ελα εδω", "ελα σε εμενα" ],
+		"keyphrases" : ["έλα εδώ", "έλα σε εμένα" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_love",
-		"keyphrases" : ["σε αγαπω" ],
+		"keyphrases" : ["σε αγαπώ", "αγαπώ" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_knowledge_promptquestion", 
-		"keyphrases" : ["ερωτηση", "εχω μια ερωτηση", "συζητηση", "ασ μιλησουμε", "ελα να μιλησουμε" ],
+		"keyphrases" : ["ερώτηση", "έχω μια ερώτηση", "συζήτηση", "ας μιλήσουμε", "έλα να μιλήσουμε" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_clock_checktimer", 
-		"keyphrases" : ["δες το χρονομετρο", "ποση ωρα μενει", "ποσο χρονο ακομα" ],
+		"keyphrases" : ["δες το χρονόμετρο", "πόση ώρα μένει", "πόσο χρόνο ακόμα" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_global_stop_extend", 
-		"keyphrases" : ["σταματα το χρονομετρο", "σταματα χρονομετρο", "ακυρωση", "ακυρωσε το χρονομετρο", "σταματα το ρολοι", "σταματα το" ],
+		"keyphrases" : ["σταμάτα το χρονόμετρο", "σταμάτα χρονόμετρο", "ακύρωση", "ακύρωσε το χρονόμετρο", "σταμάτα το ρολόι", "σταμάτα το" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_clock_settimer_extend",
-		"keyphrases" : ["χρονομετρο", "βαλε χρονομετρο για", "βαλε χρονομετρο" ],
+		"keyphrases" : ["χρονόμετρο", "βάλε χρονόμετρο για", "βάλε χρονόμετρο" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_clock_time", 
-		"keyphrases" : ["τι ωρα ειναι", "τι ωρα", "ωρα" ],
+		"keyphrases" : ["τι ώρα είναι", "τι ώρα", "ώρα" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_quiet", 
-		"keyphrases" : ["ησυχια", "κανε ησυχια", "μεινε ησυχος" ],
+		"keyphrases" : ["ησυχία", "κάνε ησυχία", "μείνε ήσυχος" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_dance", 
-		"keyphrases" : ["χορεψε", "χορος", "χωρος", "χορεψε στην μουσικη", "στην μουσικη" ],
+		"keyphrases" : ["χόρεψε", "χορός", "χόρεψε στη μουσική", "στη μουσική" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_play_pickupcube",
-		"keyphrases" : ["σηκωσε", "σηκωσε το" ],
+		"keyphrases" : ["σήκωσε", "σήκωσέ το" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_fetchcube", 
-		"keyphrases" : ["φερε τον κυβο σου", "φερτον", "φερε μου", "δωσε μου", "δωσε μου τον κυβο σου" ],
+		"keyphrases" : ["φέρε τον κύβο σου", "φέρτον", "φέρε μου", "δώσε μου", "δώσε μου τον κύβο σου" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_imperative_findcube", 
-		"keyphrases" : ["βρες τον κυβο σου", "βρες τον", "βρες τον κυβο" ],
+		"keyphrases" : ["βρες τον κύβο σου", "βρες τον", "βρες τον κύβο" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_play_anytrick", 
-		"keyphrases" : ["κολπο", "κανε ενα κολπο" ],
+		"keyphrases" : ["κόλπο", "κάνε ένα κόλπο" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_message_recordmessage_extend",
-		"keyphrases" : ["ηχογραφησε" ],
+		"keyphrases" : ["ηχογράφησε" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_message_playmessage_extend", 
-		"keyphrases" : ["παιξε το μηνυμα", "παιξε μου το μηνυμα" ],
+		"keyphrases" : ["παίξε το μήνυμα", "παίξε μου το μήνυμα" ],
 		"requiresexact": false
 	},
-		{	
+	{	
 		"name": "intent_blackjack_hit", 
-		"keyphrases" : ["χτυπα"],
+		"keyphrases" : ["χτύπα"],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_blackjack_stand", 
-		"keyphrases" : ["σταματω", "σταματο" ],
+		"keyphrases" : ["σταματώ", "σταματό" ],
 		"requiresexact": false
 	},
 	{	
 		"name": "intent_play_keepaway",
-		"keyphrases": ["κρατα μακρια", "μακρια", "παιξε κρατα μακρια" ],
+		"keyphrases": ["κράτα μακριά", "μακριά", "παίξε κράτα μακριά" ],
 		"requiresexact": false
 	}
 ]
