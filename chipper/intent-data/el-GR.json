@@ -176,7 +176,7 @@
 	},
 	{	
 		"name": "intent_imperative_shutup", 
-		"keyphrases" : ["σκάσε", "βούλωσέ το", "κλείσε το στόμα σου" ],
+		"keyphrases" : ["σκάσε", "βούλωσέ το", "κλείσε το στόμα σου", "είσαι το στόμα σου" ],
 		"requiresexact": false
 	},
 	{	
