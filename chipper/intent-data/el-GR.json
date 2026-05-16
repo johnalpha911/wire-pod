@@ -86,7 +86,7 @@
 	},
 	{	
 		"name": "intent_imperative_turnaround", 
-		"keyphrases" : ["γυρνα", "εκατον οδγοντα", "ηυρνα πισω σου", "γυρνα γυρω" ],
+		"keyphrases" : ["γυρνα", "εκατον οδγοντα", "γυρνα πισω σου", "γυρνα γυρω" ],
 		"requiresexact": false
 	},
 	{	
@@ -96,7 +96,7 @@
 	},
 	{	
 		"name": "intent_imperative_turnright", 
-		"keyphrases" : ["στριψε αριστερα", "πηγαινε αριστερα", "αριστερα", "γυρνα αριστερσ" ],
+		"keyphrases" : ["στριψε αριστερα", "πηγαινε αριστερα", "αριστερα", "γυρνα αριστερα" ],
 		"requiresexact": false
 	},
 	{	
