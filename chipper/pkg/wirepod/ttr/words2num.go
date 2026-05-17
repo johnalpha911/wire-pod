@@ -6,7 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	lcztn "github.com/kercre123/wire-pod/chipper/pkg/wirepod/localization" 
+	"github.com/kercre123/wire-pod/chipper/pkg/vars"
+	lcztn "github.com/kercre123/wire-pod/chipper/pkg/wirepod/localization"
 )
 
 // This file contains words2num. It is given the spoken text and returns a string which contains the true number.
@@ -38,38 +39,37 @@ func whisperSpeechtoNum(input string) string {
 	return strconv.Itoa(totalSeconds)
 }
 
-//initialize by default in english during chipper compilation
+// initialize by default in english during chipper compilation
 var textToNumber = map[string]int{
-	lcztn.GetText(lcztn.STR_ZERO)		: 0, 
-	lcztn.GetText(lcztn.STR_ONE)		: 1, 
-	lcztn.GetText(lcztn.STR_TWO)		: 2, 
-	lcztn.GetText(lcztn.STR_THREE)		: 3, 
-	lcztn.GetText(lcztn.STR_FOUR)		: 4, 
-	lcztn.GetText(lcztn.STR_FIVE)		: 5,
-	lcztn.GetText(lcztn.STR_SIX)		: 6, 
-	lcztn.GetText(lcztn.STR_SEVEN)		: 7, 
-	lcztn.GetText(lcztn.STR_EIGHT)		: 8, 
-	lcztn.GetText(lcztn.STR_NINE)		: 9, 
-	lcztn.GetText(lcztn.STR_TEN)		: 10,
-	lcztn.GetText(lcztn.STR_ELEVEN)		: 11, 
-	lcztn.GetText(lcztn.STR_TWELVE)		: 12, 
-	lcztn.GetText(lcztn.STR_THIRTEEN)	: 13, 
-	lcztn.GetText(lcztn.STR_FOURTEEN)	: 14, 
-	lcztn.GetText(lcztn.STR_FIFTEEN)	: 15,
-	lcztn.GetText(lcztn.STR_SIXTEEN)	: 16, 
-	lcztn.GetText(lcztn.STR_SEVENTEEN)	: 17, 
-	lcztn.GetText(lcztn.STR_EIGHTEEN)	: 18, 
-	lcztn.GetText(lcztn.STR_NINETEEN)	: 19, 
-	lcztn.GetText(lcztn.STR_TWENTY)		: 20,
-	lcztn.GetText(lcztn.STR_THIRTY)		: 30, 
-	lcztn.GetText(lcztn.STR_FOURTY)		: 40, 
-	lcztn.GetText(lcztn.STR_FIFTY)		: 50, 
-	lcztn.GetText(lcztn.STR_SIXTY)		: 60,
-	lcztn.GetText(lcztn.STR_SEVENTY)	: 70,
-	lcztn.GetText(lcztn.STR_EIGHTY)		: 80,
-	lcztn.GetText(lcztn.STR_NINETY)		: 90,
+	lcztn.GetText(lcztn.STR_ZERO):        0,
+	lcztn.GetText(lcztn.STR_ONE):         1,
+	lcztn.GetText(lcztn.STR_TWO):         2,
+	lcztn.GetText(lcztn.STR_THREE):       3,
+	lcztn.GetText(lcztn.STR_FOUR):        4,
+	lcztn.GetText(lcztn.STR_FIVE):        5,
+	lcztn.GetText(lcztn.STR_SIX):         6,
+	lcztn.GetText(lcztn.STR_SEVEN):       7,
+	lcztn.GetText(lcztn.STR_EIGHT):       8,
+	lcztn.GetText(lcztn.STR_NINE):        9,
+	lcztn.GetText(lcztn.STR_TEN):         10,
+	lcztn.GetText(lcztn.STR_ELEVEN):      11,
+	lcztn.GetText(lcztn.STR_TWELVE):      12,
+	lcztn.GetText(lcztn.STR_THIRTEEN):    13,
+	lcztn.GetText(lcztn.STR_FOURTEEN):    14,
+	lcztn.GetText(lcztn.STR_FIFTEEN):     15,
+	lcztn.GetText(lcztn.STR_SIXTEEN):     16,
+	lcztn.GetText(lcztn.STR_SEVENTEEN):   17,
+	lcztn.GetText(lcztn.STR_EIGHTEEN):    18,
+	lcztn.GetText(lcztn.STR_NINETEEN):    19,
+	lcztn.GetText(lcztn.STR_TWENTY):      20,
+	lcztn.GetText(lcztn.STR_THIRTY):      30,
+	lcztn.GetText(lcztn.STR_FOURTY):      40,
+	lcztn.GetText(lcztn.STR_FIFTY):       50,
+	lcztn.GetText(lcztn.STR_SIXTY):       60,
+	lcztn.GetText(lcztn.STR_SEVENTY):     70,
+	lcztn.GetText(lcztn.STR_EIGHTY):      80,
+	lcztn.GetText(lcztn.STR_NINETY):      90,
 	lcztn.GetText(lcztn.STR_ONE_HUNDRED): 100,
-
 }
 
 func words2num(input string) string {
@@ -87,7 +87,17 @@ func words2num(input string) string {
 		return "3600"
 	}
 
-	str_regex_time_pattern := `(\d+|\w+(?:-\w+)?)\s*(`+lcztn.GetText(lcztn.STR_MINUTE)+`|`+lcztn.GetText(lcztn.STR_SECOND)+`|`+lcztn.GetText(lcztn.STR_HOUR)+`)s?`
+	minuteStr := lcztn.GetText(lcztn.STR_MINUTE)
+	secondStr := lcztn.GetText(lcztn.STR_SECOND)
+	hourStr := lcztn.GetText(lcztn.STR_HOUR)
+
+	if vars.APIConfig.STT.Language == "el-GR" {
+		minuteStr = "λεπτό|λεπτά"
+		secondStr = "δευτερόλεπτο|δευτερόλεπτα"
+		hourStr = "ώρα|ώρες"
+	}
+
+	str_regex_time_pattern := `(\d+|\w+(?:-\w+)?)\s*(` + minuteStr + `|` + secondStr + `|` + hourStr + `)s?`
 
 	// timePattern := regexp.MustCompile(`(\d+|\w+(?:-\w+)?)\s*(minute|second|hour)s?`)
 	timePattern := regexp.MustCompile(str_regex_time_pattern)
@@ -103,14 +113,11 @@ func words2num(input string) string {
 		}
 
 		switch unit {
-		// minute	
-		case lcztn.GetText(lcztn.STR_MINUTE):
+		case lcztn.GetText(lcztn.STR_MINUTE), "λεπτά":
 			totalSeconds += value * 60
-		// second	
-		case lcztn.GetText(lcztn.STR_SECOND):
+		case lcztn.GetText(lcztn.STR_SECOND), "δευτερόλεπτα":
 			totalSeconds += value
-		// hour	
-		case lcztn.GetText(lcztn.STR_HOUR):
+		case lcztn.GetText(lcztn.STR_HOUR), "ώρες":
 			totalSeconds += value * 3600
 		}
 	}
@@ -133,37 +140,36 @@ func mapTextToNumber(text string) int {
 
 }
 
-func initializeTextToNumberwithCurrentLocalization () {
+func initializeTextToNumberwithCurrentLocalization() {
 	textToNumber = map[string]int{
-		lcztn.GetText(lcztn.STR_ZERO)		: 0, 
-		lcztn.GetText(lcztn.STR_ONE)		: 1, 
-		lcztn.GetText(lcztn.STR_TWO)		: 2, 
-		lcztn.GetText(lcztn.STR_THREE)		: 3, 
-		lcztn.GetText(lcztn.STR_FOUR)		: 4, 
-		lcztn.GetText(lcztn.STR_FIVE)		: 5,
-		lcztn.GetText(lcztn.STR_SIX)		: 6, 
-		lcztn.GetText(lcztn.STR_SEVEN)		: 7, 
-		lcztn.GetText(lcztn.STR_EIGHT)		: 8, 
-		lcztn.GetText(lcztn.STR_NINE)		: 9, 
-		lcztn.GetText(lcztn.STR_TEN)		: 10,
-		lcztn.GetText(lcztn.STR_ELEVEN)		: 11, 
-		lcztn.GetText(lcztn.STR_TWELVE)		: 12, 
-		lcztn.GetText(lcztn.STR_THIRTEEN)	: 13, 
-		lcztn.GetText(lcztn.STR_FOURTEEN)	: 14, 
-		lcztn.GetText(lcztn.STR_FIFTEEN)	: 15,
-		lcztn.GetText(lcztn.STR_SIXTEEN)	: 16, 
-		lcztn.GetText(lcztn.STR_SEVENTEEN)	: 17, 
-		lcztn.GetText(lcztn.STR_EIGHTEEN)	: 18, 
-		lcztn.GetText(lcztn.STR_NINETEEN)	: 19, 
-		lcztn.GetText(lcztn.STR_TWENTY)		: 20,
-		lcztn.GetText(lcztn.STR_THIRTY)		: 30, 
-		lcztn.GetText(lcztn.STR_FOURTY)		: 40, 
-		lcztn.GetText(lcztn.STR_FIFTY)		: 50, 
-		lcztn.GetText(lcztn.STR_SIXTY)		: 60,
-		lcztn.GetText(lcztn.STR_SEVENTY)	: 70,
-		lcztn.GetText(lcztn.STR_EIGHTY)		: 80,
-		lcztn.GetText(lcztn.STR_NINETY)		: 90,
+		lcztn.GetText(lcztn.STR_ZERO):        0,
+		lcztn.GetText(lcztn.STR_ONE):         1,
+		lcztn.GetText(lcztn.STR_TWO):         2,
+		lcztn.GetText(lcztn.STR_THREE):       3,
+		lcztn.GetText(lcztn.STR_FOUR):        4,
+		lcztn.GetText(lcztn.STR_FIVE):        5,
+		lcztn.GetText(lcztn.STR_SIX):         6,
+		lcztn.GetText(lcztn.STR_SEVEN):       7,
+		lcztn.GetText(lcztn.STR_EIGHT):       8,
+		lcztn.GetText(lcztn.STR_NINE):        9,
+		lcztn.GetText(lcztn.STR_TEN):         10,
+		lcztn.GetText(lcztn.STR_ELEVEN):      11,
+		lcztn.GetText(lcztn.STR_TWELVE):      12,
+		lcztn.GetText(lcztn.STR_THIRTEEN):    13,
+		lcztn.GetText(lcztn.STR_FOURTEEN):    14,
+		lcztn.GetText(lcztn.STR_FIFTEEN):     15,
+		lcztn.GetText(lcztn.STR_SIXTEEN):     16,
+		lcztn.GetText(lcztn.STR_SEVENTEEN):   17,
+		lcztn.GetText(lcztn.STR_EIGHTEEN):    18,
+		lcztn.GetText(lcztn.STR_NINETEEN):    19,
+		lcztn.GetText(lcztn.STR_TWENTY):      20,
+		lcztn.GetText(lcztn.STR_THIRTY):      30,
+		lcztn.GetText(lcztn.STR_FOURTY):      40,
+		lcztn.GetText(lcztn.STR_FIFTY):       50,
+		lcztn.GetText(lcztn.STR_SIXTY):       60,
+		lcztn.GetText(lcztn.STR_SEVENTY):     70,
+		lcztn.GetText(lcztn.STR_EIGHTY):      80,
+		lcztn.GetText(lcztn.STR_NINETY):      90,
 		lcztn.GetText(lcztn.STR_ONE_HUNDRED): 100,
-	
 	}
 }
