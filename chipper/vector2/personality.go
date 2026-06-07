@@ -2,21 +2,21 @@ package main
 
 import (
 	"fmt"
-        "log"
+	"log"
 	"time"
 )
 
 type PersonalityState struct {
-	Mood      string
-	Energy    float64
-	Boredom   float64
-	Updated   time.Time
+	Mood    string
+	Energy  float64
+	Boredom float64
+	Updated time.Time
 }
 
 func getPersonalityState() (*PersonalityState, error) {
 	row := DB.QueryRow(`
-		SELECT current_mood, energy_level, 
-		boredom_level, last_updated 
+		SELECT current_mood, energy_level,
+		boredom_level, last_updated
 		FROM personality_state WHERE id = 1
 	`)
 
@@ -32,13 +32,14 @@ func getPersonalityState() (*PersonalityState, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	state.Updated, _ = time.Parse("2006-01-02 15:04:05", updatedStr)
 	return state, nil
 }
 
 func updatePersonalityState(mood string, energy float64, boredom float64) error {
 	_, err := DB.Exec(`
-		UPDATE personality_state 
+		UPDATE personality_state
 		SET current_mood = ?,
 		    energy_level = ?,
 		    boredom_level = ?,
@@ -70,19 +71,9 @@ func startPersonalityEngine() {
 				continue
 			}
 
-			// Increase boredom over time
-			newBoredom := state.Boredom + 0.01
-			if newBoredom > 1.0 {
-				newBoredom = 1.0
-			}
+			newBoredom := minF(1.0, state.Boredom+0.01)
+			newEnergy := maxF(0.0, state.Energy-0.005)
 
-			// Decrease energy over time
-			newEnergy := state.Energy - 0.005
-			if newEnergy < 0.0 {
-				newEnergy = 0.0
-			}
-
-			// Determine mood from state
 			newMood := state.Mood
 			if newEnergy < 0.3 {
 				newMood = "tired"
@@ -99,10 +90,10 @@ func startPersonalityEngine() {
 				continue
 			}
 
-			logThought("personality", 
+			logThought("personality",
 				"mood="+newMood+
-				" energy="+fmt.Sprintf("%.2f", newEnergy)+
-				" boredom="+fmt.Sprintf("%.2f", newBoredom))
+					" energy="+fmt.Sprintf("%.2f", newEnergy)+
+					" boredom="+fmt.Sprintf("%.2f", newBoredom))
 		}
 	}()
 

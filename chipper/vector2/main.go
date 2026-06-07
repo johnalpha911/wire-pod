@@ -1,7 +1,10 @@
 package main
 
 import (
-	"database/sql"
+	"encoding/json"
+	"time"
+        "context"
+        "database/sql"
 	"log"
 	"os"
 
@@ -13,7 +16,19 @@ var Name = "Vector 2.0"
 var DB *sql.DB
 
 func Action(transcribedText, botSerial, guid, target string) (string, string) {
-	log.Printf("Vector 2.0: Action called - bot:%s text:%s", botSerial, transcribedText)
+	log.Printf("Vector 2.0: Action called - bot:%s text:%s", 
+		botSerial, transcribedText)
+
+	// Connect SDK on first interaction
+	if Robot == nil {
+		if err := connectSDK(botSerial, target, guid); err != nil {
+			log.Printf("Vector 2.0: SDK connection error: %v", err)
+		} else {
+			ctx := context.Background()
+			startEventListener(ctx)
+		}
+	}
+
 	return "", ""
 }
 
@@ -89,14 +104,98 @@ func initDB() error {
 }
 
 func init() {
-    log.Println("Vector 2.0: Initializing...")
+	log.Println("Vector 2.0: Initializing...")
 
-    if err := initDB(); err != nil {
-        log.Printf("Vector 2.0: Database error: %v", err)
-        return
-    }
+	if err := initDB(); err != nil {
+		log.Printf("Vector 2.0: Database error: %v", err)
+		return
+	}
 
-    log.Println("Vector 2.0: Database ready at ~/.wirepod/vector2/vector2.db")
-    startPersonalityEngine()
-    log.Println("Vector 2.0: Ready")
+	log.Println("Vector 2.0: Database ready")
+	startPersonalityEngine()
+	
+	// Connect SDK automatically on startup
+	go func() {
+		// Wait for WirePod to fully initialize
+		time.Sleep(5 * time.Second)
+		connectSDKFromJdocs()
+	}()
+
+	log.Println("Vector 2.0: Ready")
+}
+
+type BotInfo struct {	GlobalGUID string `json:"global_guid"`
+	Robots     []struct {
+		ESN       string `json:"esn"`
+		IPAddress string `json:"ip_address"`
+		GUID      string `json:"guid"`
+		Activated bool   `json:"activated"`
+	} `json:"robots"`
+}
+
+func findJdocsPath() string {
+	candidates := []string{
+		"./jdocs/botSdkInfo.json",
+	}
+
+	// Search all users in /home
+	homeDirs, _ := os.ReadDir("/home")
+	for _, dir := range homeDirs {
+		candidates = append(candidates,
+			"/home/"+dir.Name()+"/VECTOR2/wire-pod/chipper/jdocs/botSdkInfo.json",
+			"/home/"+dir.Name()+"/wire-pod/chipper/jdocs/botSdkInfo.json",
+		)
+	}
+
+	// Also try root
+	candidates = append(candidates,
+		"/root/VECTOR2/wire-pod/chipper/jdocs/botSdkInfo.json",
+		"/root/wire-pod/chipper/jdocs/botSdkInfo.json",
+	)
+
+	for _, path := range candidates {
+		if _, err := os.Stat(path); err == nil {
+			log.Printf("Vector 2.0: Found jdocs at %s", path)
+			return path
+		}
+	}
+	return ""
+}
+
+func connectSDKFromJdocs() {
+	jdocsPath := findJdocsPath()
+	if jdocsPath == "" {
+		log.Println("Vector 2.0: Could not find botSdkInfo.json anywhere")
+		return
+	}
+
+	data, err := os.ReadFile(jdocsPath)
+	if err != nil {
+		log.Printf("Vector 2.0: Could not read jdocs: %v", err)
+		return
+	}
+
+	var botInfo BotInfo
+	if err := json.Unmarshal(data, &botInfo); err != nil {
+		log.Printf("Vector 2.0: Could not parse jdocs: %v", err)
+		return
+	}
+
+	if len(botInfo.Robots) == 0 {
+		log.Println("Vector 2.0: No robots found in jdocs")
+		return
+	}
+
+	bot := botInfo.Robots[0]
+	log.Printf("Vector 2.0: Connecting to Vector %s at %s", 
+		bot.ESN, bot.IPAddress)
+
+	if err := connectSDK(bot.ESN, bot.IPAddress, bot.GUID); err != nil {
+		log.Printf("Vector 2.0: SDK connection failed: %v", err)
+		return
+	}
+
+	ctx := context.Background()
+	startEventListener(ctx)
+	log.Printf("Vector 2.0: SDK connected and listening to %s", bot.ESN)
 }
