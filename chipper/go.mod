@@ -1,6 +1,8 @@
 module github.com/kercre123/wire-pod/chipper
 
-go 1.18
+go 1.21
+
+toolchain go1.22.4
 
 require (
 	github.com/Picovoice/leopard/binding/go/v2 v2.0.2
@@ -70,7 +72,7 @@ require (
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/mattn/go-runewidth v0.0.10 // indirect
-	github.com/mattn/go-sqlite3 v1.14.3 // indirect
+	github.com/mattn/go-sqlite3 v1.14.45 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d // indirect
 	github.com/mgutz/logxi v0.0.0-20161027140823-aebf8a7d67ab // indirect
