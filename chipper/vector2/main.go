@@ -26,6 +26,8 @@ func Action(transcribedText, botSerial, guid, target string) (string, string) {
 		} else {
 			ctx := context.Background()
 			startEventListener(ctx)
+			time.Sleep(2 * time.Second)
+			listAnimationTriggers()
 		}
 	}
 
@@ -113,6 +115,7 @@ func init() {
 
 	log.Println("Vector 2.0: Database ready")
 	startPersonalityEngine()
+	startBrain()
 	
 	// Connect SDK automatically on startup
 	go func() {
