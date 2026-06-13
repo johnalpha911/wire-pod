@@ -30,6 +30,8 @@ var carryControlStop chan bool
 var carryControlActive bool
 var lastFaceID string
 var lastFaceTime time.Time
+var touchStopTimer *time.Timer
+var currentlyPetted bool
 
 func connectSDK(botSerial string, target string, guid string) error {
 	var err error
@@ -235,12 +237,28 @@ func handleRobotState(state *vectorpb.RobotState) {
 	}
 
 	if touchChanged && isTouched {
-		logThought("sdk", "Being petted")
-		go triggerBrainEvent("being petted gently")
+		// Cancel any pending "stopped" timer
+		if touchStopTimer != nil {
+			touchStopTimer.Stop()
+		}
+		// Only register start if not already being petted
+		if !currentlyPetted {
+			currentlyPetted = true
+			logThought("sdk", "Being petted")
+			go triggerBrainEvent("being petted gently")
+		}
 	}
 
 	if touchChanged && !isTouched {
-		logThought("sdk", "Petting stopped")
+		// Don't immediately register stop - wait 3 seconds
+		// in case it's just sensor flicker
+		if touchStopTimer != nil {
+			touchStopTimer.Stop()
+		}
+		touchStopTimer = time.AfterFunc(3*time.Second, func() {
+			currentlyPetted = false
+			logThought("sdk", "Petting stopped")
+		})
 	}
 
 	if cliffChanged && cliffDetected {

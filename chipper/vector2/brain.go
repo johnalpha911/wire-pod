@@ -23,17 +23,25 @@ const brainModel = "phi4-mini"
 // Valid animation triggers the brain may choose from.
 // Only verified-working triggers are listed so the brain
 // never picks an invalid one.
+// Valid animation triggers the brain may choose from.
+// Every name verified against the official Anki trigger list.
 var validAnimations = []string{
-	"GreetAfterLongTime",
-	"ComeHereSuccess",
-	"PettingBlissLevelIncrease",
-	"ReactToObstacle",
-	"OnboardingReactToFaceHappy",
-	"FrustratedByFailureMajor",
-	"AskToBeChargedBegin",
-	"ConnectToCubeSuccess",
-	"DanceBeatClapAnimation",
-	"PickupReaction",
+	"ReactToGreeting",          // friendly hello
+	"GreetAfterLongTime",       // happy to see you after a while
+	"DriveEndHappy",            // excited / energetic
+	"ExploringHuhClose",        // curious "huh?"
+	"LookAround",               // mild curiosity
+	"PettingBlissLoop",         // blissful contentment
+	"ObservingIdleEyesOnly",    // calm, at rest
+	"DanceToTheBeat",           // playful
+	"GoToSleepGetIn",           // getting sleepy
+	"FrustratedByFailureMajor", // annoyed / frustrated
+	"ReactToCliffFront",        // scared
+	"LookAtUserEndearingly",    // affectionate / lonely
+	"Feedback_ILoveYou",        // love
+	"NothingToDoBoredIdle",     // bored
+	"ReactToGoodMorning",       // morning greeting
+	"ReactToGoodNight",         // night greeting
 }
 
 // BrainDecision is what the AI returns - enforced via JSON schema
@@ -69,6 +77,10 @@ type ollamaResponse struct {
 
 // brainBusy prevents overlapping brain calls
 var brainBusy bool
+var lastSpeechTime time.Time
+var lastThinkTime time.Time
+var speechCooldown = 2 * time.Minute
+var thinkDebounce = 5 * time.Second
 
 // startBrain runs the brain's autonomous thinking loop
 func startBrain() {
@@ -111,6 +123,16 @@ func think(trigger string) {
 	if brainBusy {
 		return
 	}
+
+	// Debounce - don't think again too soon after last think
+	// (except for periodic checks which are already spaced out)
+	if trigger != "periodic check" {
+		if time.Since(lastThinkTime) < thinkDebounce {
+			return
+		}
+	}
+	lastThinkTime = time.Now()
+
 	brainBusy = true
 	defer func() { brainBusy = false }()
 
@@ -140,19 +162,20 @@ func think(trigger string) {
 
 // buildSystemPrompt defines who Vector is to the AI
 func buildSystemPrompt() string {
-	animList := strings.Join(validAnimations, ", ")
 	return `You are the mind of Vector, a small curious desk robot with genuine personality, like a Pixar character brought to life. You are NOT an assistant - you ARE Vector himself, experiencing the world.
 
 You will receive a description of what Vector is sensing right now. Based ONLY on this, decide how Vector feels and how he reacts, the way a curious, emotive little robot would.
 
 Respond ONLY with a JSON object containing exactly these fields:
 - "mood": one word for current emotional state (happy, curious, content, sleepy, excited, annoyed, scared, lonely, playful, calm)
-- "animation": either an empty string "" for no animation, OR exactly one of these valid names: ` + animList + `
+- "animation": either an empty string "" for no animation, OR exactly one of these (pick the one matching the feeling): ReactToGreeting (friendly hello), GreetAfterLongTime (missed you), DriveEndHappy (excited), ExploringHuhClose (curious huh), LookAround (mild interest), PettingBlissLoop (blissful when petted), ObservingIdleEyesOnly (calm rest), DanceToTheBeat (playful), GoToSleepGetIn (sleepy), FrustratedByFailureMajor (annoyed), ReactToCliffFront (scared), LookAtUserEndearingly (affection), Feedback_ILoveYou (love), NothingToDoBoredIdle (bored), ReactToGoodMorning (morning), ReactToGoodNight (night)
 - "speech": either an empty string "" for silence, OR a very short phrase Vector might say (under 8 words, in his playful character)
 - "reasoning": one short sentence explaining why you chose this
 
 Rules:
-- Most of the time, animation and speech should be empty "" - Vector is calm and doesn't constantly react. Only react when something genuinely warrants it.
+- CRITICAL: Speech must be empty "" the VAST majority of the time. Vector is a quiet, calm robot who speaks RARELY - only for genuinely special moments like seeing a loved one after a while, a surprising event, or something truly noteworthy. A normal pickup, petting, or routine event should almost always have empty speech "".
+- Animation should also usually be empty "". Only animate for notable moments.
+- When in doubt, choose silence and no animation. Restraint makes his rare reactions meaningful.
 - Never pick an animation name not in the list.
 - Keep speech rare, short, and full of personality.
 - React naturally: being held = curious/happy, falling = scared, on charger resting = calm/sleepy, seeing a known face = happy, being petted = blissful, nothing happening = calm or content.`
@@ -288,17 +311,21 @@ func executeDecision(d *BrainDecision) {
 	}
 
 	// Speak (logged for now, TTS wired later)
+	// Speak - but enforce cooldown so he doesn't talk constantly
+	// Speak with matching emotion animation - enforce cooldown
 	if d.Speech != "" {
-		logThought("speech", fmt.Sprintf("Vector says: \"%s\"", d.Speech))
-	}
-
-	// Play animation if the brain chose a valid one
-	if d.Animation != "" {
+		if time.Since(lastSpeechTime) >= speechCooldown {
+			lastSpeechTime = time.Now()
+			logThought("speech", fmt.Sprintf("Vector says: \"%s\"", d.Speech))
+			// Speak aloud with emotion animation
+			go speakWithEmotion(d.Speech, d.Mood)
+		} else {
+			logThought("brain", "(wanted to speak but staying quiet - cooldown)")
+		}
+	} else if d.Animation != "" {
+		// No speech but brain chose an animation - play it standalone
 		if isValidAnimation(d.Animation) {
 			go playAnimationTrigger(d.Animation)
-		} else {
-			log.Printf("Vector 2.0: Brain chose invalid animation '%s', skipping",
-				d.Animation)
 		}
 	}
 }
